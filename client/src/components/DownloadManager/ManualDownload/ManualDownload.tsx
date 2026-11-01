@@ -122,7 +122,7 @@ const ManualDownload: React.FC<ManualDownloadProps> = ({ onStartDownload, token,
       }
 
       if (data.isMembersOnly) {
-        setErrorMessage('This video is members-only and cannot be downloaded.');
+        setErrorMessage('This video is members-only and the configured cookies do not have access to it.');
         return false;
       }
 

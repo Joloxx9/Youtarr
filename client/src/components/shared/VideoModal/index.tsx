@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import {
   Dialog,
@@ -142,18 +142,8 @@ function VideoModal({
     return () => { controller.abort(); };
   }, [open, video.channelId, token]);
 
-  // Promote localVideo to members_only display when the metadata fetch detects
-  // a members-only video. The backend stamps the channelvideos row in the same
-  // request, so a second open would catch it via getVideoStatus, but on the
-  // first open the prop's status is stale (still 'never_downloaded' or similar).
-  // Deriving here keeps VideoPlayer/VideoActions in sync without round-tripping.
-  const displayVideo = useMemo(() => {
-    if (localVideo.status === 'queued' || localVideo.status === 'downloading') return localVideo;
-    if (metadata?.availability === 'subscriber_only' && localVideo.status !== 'members_only') {
-      return { ...localVideo, status: 'members_only' as const };
-    }
-    return localVideo;
-  }, [localVideo, metadata?.availability]);
+  // Members-only videos stay downloadable, so they keep their normal status here.
+  const displayVideo = localVideo;
 
   // Notify the parent the first time we promote a video to members_only, so
   // list pages that read availability (e.g. ChannelVideos via getVideoStatus)

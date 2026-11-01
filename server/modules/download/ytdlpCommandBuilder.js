@@ -488,7 +488,6 @@ class YtdlpCommandBuilder {
   static buildMatchFilters(filterConfig = null) {
     // Base filters - always applied for channel downloads
     const baseFilters = [
-      'availability!=subscriber_only',
       '!is_live',
       'live_status!=is_upcoming',
     ];
@@ -733,7 +732,7 @@ class YtdlpCommandBuilder {
       '--write-info-json',
       '--no-write-playlist-metafiles',
       '--extractor-args', 'youtubetab:tab=videos;sort=dd',
-      '--match-filter', 'availability!=subscriber_only & !is_live & live_status!=is_upcoming',
+      '--match-filter', '!is_live & live_status!=is_upcoming',
       '-o', outputPath,
       '--datebefore', 'now',
       '-o', `thumbnail:${thumbnailPath}`,

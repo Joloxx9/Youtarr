@@ -81,7 +81,6 @@ class VideoValidationModule {
    * @returns {Object} - Formatted response
    */
   toValidationResponse(videoId, metadata, isDuplicate) {
-    const isMembersOnly = metadata.availability === 'subscriber_only';
     const availabilityProvided = Boolean(metadata.availability);
 
     const contentRating = metadata.contentRating || metadata.content_rating || null;
@@ -90,7 +89,9 @@ class VideoValidationModule {
     const resp = {
       isValidUrl: true,
       isAlreadyDownloaded: isDuplicate,
-      isMembersOnly: isMembersOnly,
+      // Metadata was readable, so these cookies can access the video. Only the
+      // yt-dlp "join this channel" error path reports isMembersOnly: true.
+      isMembersOnly: false,
       metadata: {
         youtubeId: videoId,
         url: `https://www.youtube.com/watch?v=${videoId}`,

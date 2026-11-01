@@ -10,9 +10,6 @@ export const getVideoStatus = (video: ChannelVideo): VideoStatus => {
   if (video.ignored) {
     return 'ignored';
   }
-  if (video.availability === 'subscriber_only') {
-    return 'members_only';
-  }
   if (!video.added) {
     return 'never_downloaded';
   }

@@ -26,11 +26,10 @@ class ChannelDownloadAllModule {
     });
 
     // Mirror the yt-dlp manual-download match filter
-    // (availability!=subscriber_only & !is_live & live_status!=is_upcoming)
+    // (!is_live & live_status!=is_upcoming)
     // so the preview count matches what yt-dlp will accept.
     const candidates = rows.filter(
       (row) =>
-        row.availability !== 'subscriber_only' &&
         row.live_status !== 'is_live' &&
         row.live_status !== 'is_upcoming'
     );
